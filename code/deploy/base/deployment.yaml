@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: store
+  template:
+    spec:
+      terminationGracePeriodSeconds: 10
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+        - name: web-static
+          image: static
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/store/
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 2000
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 2000
+            initialDelaySeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 2000
+            initialDelaySeconds: 3
+        - name: web-books
+          image: books
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/store/
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 2200
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 2200
+            initialDelaySeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 2200
+            initialDelaySeconds: 3
+        - name: web-food
+          image: food
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/store/
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 2100
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 2100
+            initialDelaySeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 2100
+            initialDelaySeconds: 3
+          imagePullPolicy: Always
+      volumes:
+        - name: config-volume
+          configMap:
+            name: app-config
+            items:
+            - key: store.conf
+              path: store.conf

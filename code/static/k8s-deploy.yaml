@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: static-service
+  labels:
+    app: static-app
+spec:
+  clusterIP: None
+  ports:
+    - port: 2000
+      name: static-app
+  selector:
+    app: static-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static
+  labels:
+    app: static-app
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static-app
+  template:
+    metadata:
+      labels:
+        app: static-app
+    spec:
+      containers:
+        - name: webstatic
+          image: static
+          ports:
+            - containerPort: 2000
