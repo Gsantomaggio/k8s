@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: store-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/food(/|$)(.*)
+            backend:
+              serviceName: food-service
+              servicePort: 2100
+
+          - path: /api/books(/|$)(.*)
+            backend:
+              serviceName: books-service
+              servicePort: 2200
+          - path: /
+            backend:
+              serviceName: static-service
+              servicePort: 2000
