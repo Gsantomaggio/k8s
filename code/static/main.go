@@ -16,10 +16,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("OK"))
 }
 
 func main() {
+	log.Printf("[store] webstatic is starting")
 	port := "2000"
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", indexHandler)

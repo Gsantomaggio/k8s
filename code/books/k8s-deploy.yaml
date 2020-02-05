@@ -18,7 +18,6 @@ metadata:
   name: books
   labels:
     app: books-app
-
 spec:
   replicas: 1
   selector:

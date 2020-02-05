@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: books-service
+  labels:
+    app: books-app
+spec:
+  clusterIP: None
+  ports:
+    - port: 2200
+      name: books-app
+  selector:
+    app: books-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: food-service
+  labels:
+    app: food-app
+spec:
+  clusterIP: None
+  ports:
+    - port: 2100
+      name: food-app
+  selector:
+    app: food-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: static-service
+  labels:
+    app: static-app
+spec:
+  clusterIP: None
+  ports:
+    - port: 2000
+      name: static-app
+  selector:
+    app: static-app

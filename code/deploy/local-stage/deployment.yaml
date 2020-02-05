@@ -1,78 +1,102 @@
 apiVersion: apps/v1
 kind: Deployment
+metadata:
+  name: books
+  labels:
+    app: books-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: store
+      app: books-app
   template:
+    metadata:
+      labels:
+        app: books-app
     spec:
-      terminationGracePeriodSeconds: 10
-      nodeSelector:
-        kubernetes.io/os: linux
       containers:
-        - name: web-static
-          image: static
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/store/
-          ports:
-            - name: http
-              protocol: TCP
-              containerPort: 2000
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 2000
-            initialDelaySeconds: 3
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 2000
-            initialDelaySeconds: 3
-        - name: web-books
+        - name: webbooks
           image: books
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/store/
           ports:
-            - name: http
-              protocol: TCP
-              containerPort: 2200
+            - containerPort: 2200
           livenessProbe:
             httpGet:
               path: /healthz
               port: 2200
             initialDelaySeconds: 3
+            periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /healthz
-              port: 2200
+                path: /healthz
+                port: 2200
             initialDelaySeconds: 3
-        - name: web-food
+            periodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: food
+  labels:
+    app: food-app
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: food-app
+  template:
+    metadata:
+      labels:
+        app: food-app
+    spec:
+      containers:
+        - name: webfood
           image: food
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/store/
           ports:
-            - name: http
-              protocol: TCP
-              containerPort: 2100
+            - containerPort: 2100
           livenessProbe:
             httpGet:
               path: /healthz
               port: 2100
             initialDelaySeconds: 3
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+                path: /healthz
+                port: 2100
+            initialDelaySeconds: 3
+            periodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static
+  labels:
+    app: static-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: static-app
+  template:
+    metadata:
+      labels:
+        app: static-app
+    spec:
+      containers:
+        - name: webstatic
+          image: static
+          ports:
+            - containerPort: 2000
+          livenessProbe:
+            httpGet:
+             path: /healthz
+             port: 2100
+            initialDelaySeconds: 3
+            periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /healthz
               port: 2100
             initialDelaySeconds: 3
-          imagePullPolicy: Always
-      volumes:
-        - name: config-volume
-          configMap:
-            name: app-config
-            items:
-            - key: store.conf
-              path: store.conf
+            periodSeconds: 5

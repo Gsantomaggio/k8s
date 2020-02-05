@@ -1,4 +1,12 @@
 apiVersion: skaffold/v2alpha3
 kind: Config
+build:
+  artifacts:
+    - image: books
+      context: ../../books/
+    - image: food
+      context: ../../food/
+    - image: static
+      context: ../../static/
 deploy:
   kustomize: {}

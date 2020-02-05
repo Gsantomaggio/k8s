@@ -23,6 +23,7 @@ type Host struct {
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("OK"))
 }
 
@@ -50,6 +51,7 @@ func itemsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	log.Printf("[store] books is starting...")
 	port := "2200"
 	mux := http.NewServeMux()
 	mux.HandleFunc("/items", itemsHandler)
