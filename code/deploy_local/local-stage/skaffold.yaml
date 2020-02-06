@@ -3,10 +3,13 @@ kind: Config
 build:
   artifacts:
     - image: books
-      context: ../../books/
+      context: ../../ms_books/
     - image: food
-      context: ../../food/
+      context: ../../ms_food/
     - image: static
-      context: ../../static/
+      context: ../../ms_static/
 deploy:
   kustomize: {}
+  kubectl:
+    manifests:
+       - ../prometheus/*

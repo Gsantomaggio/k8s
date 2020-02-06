@@ -21,6 +21,7 @@ RUN go build -o books .
 
 # Expose port 3000 to the outside world
 EXPOSE 2200
+EXPOSE 2112
 
 # Command to run the executable
 CMD ["./books"]

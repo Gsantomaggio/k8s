@@ -8,6 +8,11 @@ spec:
   rules:
     - http:
         paths:
+          - path: /home
+            backend:
+              serviceName: static-service
+              servicePort: 2000
+
           - path: /api/food(/|$)(.*)
             backend:
               serviceName: food-service
@@ -17,7 +22,9 @@ spec:
             backend:
               serviceName: books-service
               servicePort: 2200
-          - path: /
+
+          - path: /monitoring/books(/|$)(.*)
             backend:
-              serviceName: static-service
-              servicePort: 2000
+                serviceName: books-service
+                servicePort: 2112
+

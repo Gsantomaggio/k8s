@@ -9,6 +9,8 @@ spec:
   ports:
     - port: 2200
       name: books-app
+    - port: 2112
+      name: books-metrics
   selector:
     app: books-app
 ---
@@ -32,4 +34,10 @@ spec:
         - name: webbooks
           image: books
           ports:
-            - containerPort: 2200
+            - name: http
+              protocol: TCP
+              containerPort: 2200
+            - name: httpm
+              protocol: TCP
+              containerPort: 2112
+

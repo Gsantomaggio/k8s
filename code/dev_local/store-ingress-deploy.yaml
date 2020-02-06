@@ -17,7 +17,7 @@ spec:
             backend:
               serviceName: books-service
               servicePort: 2200
-          - path: /
+          - path: /home
             backend:
               serviceName: static-service
               servicePort: 2000

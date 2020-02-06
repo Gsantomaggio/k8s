@@ -18,7 +18,10 @@ spec:
         - name: webbooks
           image: books
           ports:
-            - containerPort: 2200
+            - name: books-items
+              containerPort: 2200
+            - name: books-metrics
+              containerPort: 2112
           livenessProbe:
             httpGet:
               path: /healthz
@@ -91,12 +94,12 @@ spec:
           livenessProbe:
             httpGet:
              path: /healthz
-             port: 2100
+             port: 2000
             initialDelaySeconds: 3
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 2100
+              port: 2000
             initialDelaySeconds: 3
             periodSeconds: 5

@@ -39,6 +39,7 @@ func itemsHandler(w http.ResponseWriter, r *http.Request) {
 	foods.Foods = append(foods.Foods, &Food{Type: "Pasta", Source: "Italy"})
 	foods.Foods = append(foods.Foods, &Food{Type: "Sushi", Source: "Japan"})
 	foods.Foods = append(foods.Foods, &Food{Type: "Baguette", Source: "France"})
+//DEMO	foods.Foods = append(foods.Foods, &Food{Type: "Pizza", Source: "Italy"})
 
 	b, _ := json.Marshal(foods)
 
