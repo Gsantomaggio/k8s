@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+metadata:
+  name: code
+build:
+  artifacts:
+  - image: books
+    context: ../ms_books
+deploy:
+  kubectl:
+    manifests:
+    - ../ms_books/k8s-deploy.yaml
