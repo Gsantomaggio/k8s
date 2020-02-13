@@ -19,21 +19,7 @@ spec:
           image: books
           ports:
             - name: books-items
-              containerPort: 2200
-            - name: books-metrics
-              containerPort: 2112
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 2200
-            initialDelaySeconds: 3
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-                path: /healthz
-                port: 2200
-            initialDelaySeconds: 3
-            periodSeconds: 5
+              containerPort: 2200 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,18 +43,6 @@ spec:
           image: food
           ports:
             - containerPort: 2100
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 2100
-            initialDelaySeconds: 3
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-                path: /healthz
-                port: 2100
-            initialDelaySeconds: 3
-            periodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -91,15 +65,3 @@ spec:
           image: static
           ports:
             - containerPort: 2000
-          livenessProbe:
-            httpGet:
-             path: /healthz
-             port: 2000
-            initialDelaySeconds: 3
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 2000
-            initialDelaySeconds: 3
-            periodSeconds: 5
