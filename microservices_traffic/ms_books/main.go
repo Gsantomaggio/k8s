@@ -19,6 +19,8 @@ type Book struct {
 type Books struct {
 	HostName string  `json:"hostname"`
 	Books    []*Book `json:"books"`
+	Version string  `json:"version"`
+
 }
 
 type Host struct {
@@ -37,16 +39,18 @@ func itemsHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func getVersion() string {
+	return os.Getenv("BOOKS_VERSION")
+}
+
+
 func getBooks(w http.ResponseWriter) {
 	books := &Books{}
 	host, _ := os.Hostname()
 	host = fmt.Sprintf("{hostname: %s}", host)
 	books.HostName = host
-	book := &Book{}
-
-	book.Title = "Hello"
-	book.Author = "John Doe"
-
+	books.version = getVersion()
+	
 	books.Books = append(books.Books, &Book{Title: "Golang Programming", Author: "John Doe"})
 	books.Books = append(books.Books, &Book{Title: "Kubernetes Programming", Author: "Alex Kubernetes"})
 	books.Books = append(books.Books, &Book{Title: "Linux Networking", Author: "Mr Linux"})
