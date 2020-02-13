@@ -13,6 +13,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(host))
 	w.Write([]byte("<h1><a href=\"/api/books/items\">Books Store API</a> </h1>"))
 	w.Write([]byte("<h1><a href=\"/api/food/items\">Food Store API</a> </h1>"))
+	w.Write([]byte("<h1><a href=\"/monitoring/books/metrics\">Metrics Books</a> </h1>"))
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
