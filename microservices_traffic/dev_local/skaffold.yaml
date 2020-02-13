@@ -9,4 +9,6 @@ build:
 deploy:
   kubectl:
     manifests:
-    - ../ms_books/k8s-deploy.yaml
+    - deploy/book.yaml
+    - deploy/gateway.yaml
+    - deploy/route.yaml
