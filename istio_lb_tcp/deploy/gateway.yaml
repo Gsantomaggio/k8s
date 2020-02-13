@@ -1,13 +1,15 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: books-app-gateway
+  name: rabbitmq-ingress
 spec:
+  # selector:
+  #   istio: ingressgateway # use Istio default gateway implementation
   selector:
-    istio: ingressgateway # use Istio default gateway implementation
+    app: rabbitmq-ingress-gateway
   servers:
     - port:
-        number: 80
+        number: 8080
         name: http
         protocol: HTTP
       hosts:

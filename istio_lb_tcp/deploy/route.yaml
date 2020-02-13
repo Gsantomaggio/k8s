@@ -1,9 +1,9 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: books-app
+  name: rabbitmq-app
 spec:
-  host: books-app
+  host: rabbitmq-app
   subsets:
     - name: v1
       labels:
@@ -15,19 +15,41 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: books-app
+  name: rabbitmq-app
 spec:
   gateways:
-    - books-app-gateway
+    - rabbitmq-app-gateway
   hosts:
     - "*"
   http:
-    - route:
-        - destination:
-            host: books-app
-            subset: v1
-          weight: 50
-        - destination:
-            host: books-app
-            subset: v2
-          weight: 50
+    - match:
+       - port: 80
+      route:
+          - destination:
+              host: rabbitmq-app
+              subset: v1
+              port:
+                number: 15672
+            weight: 50
+          - destination:
+              host: rabbitmq-app
+              port:
+                number: 15672
+              subset: v2
+            weight: 50
+  # tcp:
+  #    - match:
+  #        - port: 5672
+  #      route:
+  #        - destination:
+  #            host: rabbitmq-app
+  #            subset: v1
+  #            port:
+  #              number: 5672
+  #          weight: 50
+  #        - destination:
+  #            host: rabbitmq-app
+  #            port:
+  #              number: 5672
+  #            subset: v2
+  #          weight: 50

@@ -1,0 +1,53 @@
+Name:                     istio-ingressgateway
+Namespace:                istio-system
+Labels:                   app=istio-ingressgateway
+                          istio=ingressgateway
+                          operator.istio.io/component=IngressGateway
+                          operator.istio.io/managed=Reconcile
+                          operator.istio.io/version=1.4.3
+                          release=istio
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"istio-ingressgateway","istio":"ingressgateway","operator...
+Selector:                 app=istio-ingressgateway
+Type:                     LoadBalancer
+IP:                       10.96.157.64
+LoadBalancer Ingress:     10.96.157.64
+Port:                     status-port  15020/TCP
+TargetPort:               15020/TCP
+NodePort:                 status-port  31185/TCP
+Endpoints:                172.17.0.11:15020
+Port:                     amqp  5672/TCP
+TargetPort:               5672/TCP
+NodePort:                 amqp  31672/TCP
+Endpoints:                172.17.0.11:5672
+Port:                     http2  80/TCP
+TargetPort:               80/TCP
+NodePort:                 http2  31671/TCP
+Endpoints:                172.17.0.11:80
+Port:                     https  443/TCP
+TargetPort:               443/TCP
+NodePort:                 https  31424/TCP
+Endpoints:                172.17.0.11:443
+Port:                     kiali  15029/TCP
+TargetPort:               15029/TCP
+NodePort:                 kiali  30715/TCP
+Endpoints:                172.17.0.11:15029
+Port:                     prometheus  15030/TCP
+TargetPort:               15030/TCP
+NodePort:                 prometheus  30107/TCP
+Endpoints:                172.17.0.11:15030
+Port:                     grafana  15031/TCP
+TargetPort:               15031/TCP
+NodePort:                 grafana  32451/TCP
+Endpoints:                172.17.0.11:15031
+Port:                     tracing  15032/TCP
+TargetPort:               15032/TCP
+NodePort:                 tracing  30536/TCP
+Endpoints:                172.17.0.11:15032
+Port:                     tls  15443/TCP
+TargetPort:               15443/TCP
+NodePort:                 tls  31096/TCP
+Endpoints:                172.17.0.11:15443
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>

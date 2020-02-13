@@ -1,80 +1,81 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: books-app
+  name: rabbitmq-app
   labels:
-    app: books-app
-    service: books-app
+    app: rabbitmq-app
+    service: rabbitmq-app
 spec:
   ports:
-    - port: 2200
+    - port: 15672
       name: http
+    - port: 5672
+      name: tcp
   selector:
-    app: books-app
+    app: rabbitmq-app
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-books-app
+  name: bookinfo-rabbitmq-app
   labels:
-    account: books-app
+    account: rabbitmq-app
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: books-app-v1
+  name: rabbitmq-app-v1
   labels:
-    app: books-app
+    app: rabbitmq-app
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: books-app
+      app: rabbitmq-app
       version: v1
   template:
     metadata:
       labels:
-        app: books-app
+        app: rabbitmq-app
         version: v1
     spec:
-      serviceAccountName: bookinfo-books-app
+      serviceAccountName: bookinfo-rabbitmq-app
       containers:
-        - name: books-app
-          env:
-            - name: BOOKS_VERSION
-              value: "1.0.0.1"
-          image: books_t
+        - name: rabbitmq-app
+          image: rabbitmq:3.8.2-management
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 2200
+            - containerPort: 15672
+            - containerPort: 5672
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: books-app-v2
+  name: rabbitmq-app-v2
   labels:
-    app: books-app
+    app: rabbitmq-app
     version: v2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: books-app
+      app: rabbitmq-app
       version: v2
   template:
     metadata:
       labels:
-        app: books-app
+        app: rabbitmq-app
         version: v2
     spec:
-      serviceAccountName: bookinfo-books-app
+      serviceAccountName: bookinfo-rabbitmq-app
       containers:
-        - name: books-app
+        - name: rabbitmq-app
           env:
             - name: BOOKS_VERSION
               value: "2.0.0.2"
-          image: books_t
+          image: rabbitmq:3.8.2-management
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 2200
+            - containerPort: 15672
+            - containerPort: 5672
