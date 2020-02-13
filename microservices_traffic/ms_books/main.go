@@ -49,8 +49,8 @@ func getBooks(w http.ResponseWriter) {
 	host, _ := os.Hostname()
 	host = fmt.Sprintf("{hostname: %s}", host)
 	books.HostName = host
-	books.version = getVersion()
-	
+	books.Version = getVersion()
+
 	books.Books = append(books.Books, &Book{Title: "Golang Programming", Author: "John Doe"})
 	books.Books = append(books.Books, &Book{Title: "Kubernetes Programming", Author: "Alex Kubernetes"})
 	books.Books = append(books.Books, &Book{Title: "Linux Networking", Author: "Mr Linux"})
