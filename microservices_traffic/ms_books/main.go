@@ -6,9 +6,11 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/streadway/amqp"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 type Book struct {
@@ -19,10 +21,7 @@ type Book struct {
 type Books struct {
 	HostName string  `json:"hostname"`
 	Books    []*Book `json:"books"`
-}
-
-type Host struct {
-	HostName string `json:"hostname"`
+	Version  string  `json:"version"`
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -33,8 +32,28 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 func itemsHandler(w http.ResponseWriter, r *http.Request) {
 	recordMetrics()
 	log.Printf("[store] called the books API")
-	getBooks(w)
+	switch r.Method {
+	case "GET":
+		getBooks(w)
+	case "POST":
+		go writeMessageToRabbitMQ()
+	}
 
+}
+
+func failOnError(err error, msg string) {
+	if err != nil {
+		log.Fatalf("%s: %s", msg, err)
+	}
+}
+func writeMessageToRabbitMQ() {
+	conn, err := amqp.Dial("amqp://test:test@rabbitmq-app.default:5672/")
+	if err != nil {
+		log.Fatalf("%s: %s", "FAIL RABBITMQ", err)
+	} else {
+		time.Sleep(2 * time.Second)
+		defer conn.Close()
+	}
 }
 
 func getBooks(w http.ResponseWriter) {
@@ -42,14 +61,12 @@ func getBooks(w http.ResponseWriter) {
 	host, _ := os.Hostname()
 	host = fmt.Sprintf("{hostname: %s}", host)
 	books.HostName = host
-	book := &Book{}
-
-	book.Title = "Hello"
-	book.Author = "John Doe"
+	books.Version = getVersion()
 
 	books.Books = append(books.Books, &Book{Title: "Golang Programming", Author: "John Doe"})
 	books.Books = append(books.Books, &Book{Title: "Kubernetes Programming", Author: "Alex Kubernetes"})
 	books.Books = append(books.Books, &Book{Title: "Linux Networking", Author: "Mr Linux"})
+	books.Books = append(books.Books, &Book{Title: "Distributed Application", Author: "Mr CAP"})
 
 	b, _ := json.Marshal(books)
 
@@ -58,11 +75,15 @@ func getBooks(w http.ResponseWriter) {
 	w.Write([]byte(string(b)))
 }
 
+func getVersion() string {
+	return os.Getenv("BOOKS_VERSION")
+}
+
 func main() {
 	log.Printf("[store] books is starting...")
 	port := "2200"
 	mux := http.NewServeMux()
-	mux.HandleFunc("/items", itemsHandler)
+	mux.HandleFunc("/", itemsHandler)
 	log.Printf("[store] books is started")
 
 	mux.HandleFunc("/healthz", healthHandler)

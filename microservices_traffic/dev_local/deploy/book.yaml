@@ -27,7 +27,7 @@ metadata:
     app: books-app
     version: v1
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: books-app
@@ -41,6 +41,7 @@ spec:
       serviceAccountName: bookinfo-books-app
       containers:
         - name: books-app
+
           env:
             - name: BOOKS_VERSION
               value: "1.0.0.1"
@@ -57,7 +58,7 @@ metadata:
     app: books-app
     version: v2
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: books-app

@@ -4,9 +4,12 @@ metadata:
   name: code
 build:
   artifacts:
-  - image: books
+  - image: books_t
     context: ../ms_books
 deploy:
   kubectl:
     manifests:
-    - ../ms_books/k8s-deploy.yaml
+    - deploy/book.yaml
+    - deploy/gateway.yaml
+    - deploy/route.yaml
+    - deploy/rmq.yaml
