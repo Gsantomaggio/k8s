@@ -56,7 +56,7 @@ func main() {
 	port := "2100"
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/items", itemsHandler)
+	mux.HandleFunc("/", itemsHandler)
 	log.Printf("[store] food is started")
 
 	mux.HandleFunc("/healthz", healthHandler)
