@@ -22,9 +22,10 @@ type Host struct {
 	HostName string `json:"hostname"`
 }
 
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
+func itemsHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("[store] called the books API")
+	getBooks(w)
+
 }
 
 func getBooks(w http.ResponseWriter) {
