@@ -7,8 +7,8 @@ echo $INGRESS_HOST:$INGRESS_PORT
 while :
 do
   curl -s http://$INGRESS_HOST:$INGRESS_PORT | json_pp
-  sleep 2
-  echo "**************************************"
+  sleep 1
+  echo "************************************************"
 done
 
 
