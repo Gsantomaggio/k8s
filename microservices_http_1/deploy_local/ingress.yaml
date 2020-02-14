@@ -22,9 +22,3 @@ spec:
             backend:
               serviceName: books-service
               servicePort: 2200
-
-          - path: /monitoring/books(/|$)(.*)
-            backend:
-                serviceName: books-service
-                servicePort: 2112
-
