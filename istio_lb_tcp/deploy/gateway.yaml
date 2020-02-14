@@ -9,7 +9,7 @@ spec:
     app: rabbitmq-ingress-gateway
   servers:
     - port:
-        number: 8080
+        number: 15672
         name: http
         protocol: HTTP
       hosts:
