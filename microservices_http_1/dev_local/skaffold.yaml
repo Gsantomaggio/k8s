@@ -17,3 +17,5 @@ deploy:
     - ../ms_food/k8s-deploy.yaml
     - ../ms_static/k8s-deploy.yaml
     - store-ingress-deploy.yaml
+
+### http://192.168.99.127/home
