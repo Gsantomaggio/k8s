@@ -9,11 +9,13 @@ import (
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	host, _ :=   os.Hostname()
-	host =  fmt.Sprintf("<h1>{hostname: %s}</h1>", host)
-	w.Write([]byte(host))
+	host =  fmt.Sprintf("<h1>Hostname: %s</h1>", host)
 	w.Write([]byte("<h1><a href=\"/api/books/items\">Books Store API</a> </h1>"))
 	w.Write([]byte("<h1><a href=\"/api/food/items\">Food Store API</a> </h1>"))
 	w.Write([]byte("<h1><a href=\"/monitoring/books/metrics\">Metrics Books</a> </h1>"))
+
+	w.Write([]byte(host))
+	
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
