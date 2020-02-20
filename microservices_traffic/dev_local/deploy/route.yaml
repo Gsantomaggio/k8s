@@ -26,8 +26,8 @@ spec:
         - destination:
             host: books-app
             subset: v1
-          weight: 50
+          weight: 0
         - destination:
             host: books-app
             subset: v2
-          weight: 50
+          weight: 100
