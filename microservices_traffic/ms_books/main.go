@@ -31,7 +31,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 
 func itemsHandler(w http.ResponseWriter, r *http.Request) {
 	recordMetrics()
-	log.Printf("[store] called the books API")
+//	log.Printf("[store] called the books API")
 	switch r.Method {
 	case "GET":
 		getBooks(w)
@@ -64,9 +64,9 @@ func getBooks(w http.ResponseWriter) {
 	books.Version = getVersion()
 
 	books.Books = append(books.Books, &Book{Title: "Golang Programming", Author: "John Doe"})
-	books.Books = append(books.Books, &Book{Title: "Kubernetes Programming", Author: "Alex Kubernetes"})
-	books.Books = append(books.Books, &Book{Title: "Linux Networking", Author: "Mr Linux"})
-	books.Books = append(books.Books, &Book{Title: "Distributed Application", Author: "Mr CAP"})
+	//books.Books = append(books.Books, &Book{Title: "Kubernetes Programming", Author: "Alex Kubernetes"})
+//	books.Books = append(books.Books, &Book{Title: "Linux Networking", Author: "Mr Linux"})
+//	books.Books = append(books.Books, &Book{Title: "Distributed Application", Author: "Mr CAP"})
 
 	b, _ := json.Marshal(books)
 
