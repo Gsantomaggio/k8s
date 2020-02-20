@@ -13,8 +13,8 @@ To tun the example you need:
 ```
  istioctl manifest apply --set profile=default
 ```
-- wait until all the serives are ready
-- enable minikue tunnel:
+- wait until all the services are ready
+- enable minikue tunnel (separated shell):
 
 ```
 minikube tunnel
