@@ -2,23 +2,25 @@
 
 To tun the example you need:
 
-- [MiniKube][1] 
-- [istioctl][2] 
+- [MiniKube](https://kubernetes.io/docs/setup/learning-environment/minikube/) 
+- [istioctl](https://istio.io/docs/reference/commands/istioctl/)
 - https://skaffold.dev/ (optional)
 
 # Run the example
 
 - Start Minukube
 - Setup istio:
-  ```
+```
  istioctl manifest apply --set profile=default
 ```
 - wait until all the serives are ready
 - enable minikue tunnel:
+
 ```
 minikube tunnel
 ```
 - deploy the example:
+
 ```
 cd dev_local
 skaffold dev
@@ -27,6 +29,7 @@ skaffold dev
 ```
  ./test_rest.sh
 ```
+
 - tune the traffic by changing the `weight`:
 ```
 http:
