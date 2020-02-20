@@ -30,6 +30,25 @@ skaffold dev
  ./test_rest.sh
 ```
 
+That's should be the result:
+```
+10.110.251.29:80
+{
+   "hostname" : "{hostname: books-app-v2-65c9dbfb9f-5h9dc}",
+   "version" : "2.0.0.2",
+   "books" : [
+      {
+         "title" : "Golang Programming",
+         "author" : "John Doe"
+      }
+   ]
+}
+
+```
+
+There are two versions running, and you can tune the traffic.
+
+
 - tune the traffic by changing the `weight`:
 ```
 http:
