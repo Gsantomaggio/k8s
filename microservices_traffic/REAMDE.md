@@ -2,8 +2,8 @@
 
 To tun the example you need:
 
-- [MiniKube][1] 
-- [istioctl][2] 
+- [MiniKube](https://kubernetes.io/docs/setup/learning-environment/minikube/) 
+- [istioctl](https://istio.io/docs/reference/commands/istioctl/)
 - https://skaffold.dev/ (optional)
 
 # Run the example
@@ -29,6 +29,7 @@ skaffold dev
 ```
  ./test_rest.sh
 ```
+
 - tune the traffic by changing the `weight`:
 ```
 http:
