@@ -83,13 +83,13 @@ spec:
         port:
           number: 5672
         subset: v1
-      weight: 50
+      weight: 100
     - destination:
         host: rabbitmq-app
         port:
           number: 5672
         subset: v2
-      weight: 50
+      weight: 0
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService

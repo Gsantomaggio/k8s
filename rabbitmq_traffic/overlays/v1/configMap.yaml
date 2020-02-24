@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: rabbitmq-config
+  name: rabbitmq-config-v1
 data:
   enabled_plugins: |
       [rabbitmq_management,rabbitmq_peer_discovery_consul].

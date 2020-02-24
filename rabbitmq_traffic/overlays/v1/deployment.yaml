@@ -89,7 +89,7 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: rabbitmq-config
+            name: rabbitmq-config-v1
             items:
             - key: rabbitmq.conf
               path: rabbitmq.conf
