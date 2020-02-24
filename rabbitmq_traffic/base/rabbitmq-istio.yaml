@@ -11,21 +11,41 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-
+# apiVersion: networking.istio.io/v1alpha3
+# kind: ServiceEntry
+# metadata:
+#   name: rabbitmq-se
+# spec:
+#   hosts:
+#   - rabbitmqv1.test
+#   location: MESH_INTERNAL
+#   ports:
+#   - number: 15672
+#     name: http
+#     protocol: HTTP
+# ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: rabbitmq-app-gateway
 spec:
   selector:
-    istio: ingressgateway
+ #   istio: ingressgateway
+    app: custom-gateway
   servers:
   - port:
-      number: 31400
-      name: tcp
+      number: 5672
+      name: amqp
       protocol: TCP
     hosts:
-    - "*" 
+    - "*"
+  - port:
+      number: 15672
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+    
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -33,6 +53,10 @@ metadata:
   name: rabbitmq-app-destination
 spec:
   host: rabbitmq-app
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 100
   subsets:
   - name: v1
     labels:
@@ -44,26 +68,63 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: rabbitmq-app
+  name: rabbitmq-app-tcp
 spec:
   hosts:
-  - "*" 
+  - rabbitmqv1.test
   gateways:
   - rabbitmq-app-gateway
   tcp:
   - match:
-    - port: 31400
+    - port: 5672
     route:
     - destination:
         host: rabbitmq-app
         port:
           number: 5672
         subset: v1
-      weight: 60
+      weight: 50
     - destination:
         host: rabbitmq-app
         port:
           number: 5672
         subset: v2
-      weight: 40
-
+      weight: 50
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: rabbitmq-app-v1
+spec:
+  hosts:
+  - rabbitmqv1.test
+  gateways:
+  - rabbitmq-app-gateway
+  http:
+  - match:
+    - port: 15672
+    route:
+    - destination:
+        host: rabbitmq-app
+        port:
+          number: 15672
+        subset: v1
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: rabbitmq-app-v2
+spec:
+  hosts:
+  - rabbitmqv2.test
+  gateways:
+  - rabbitmq-app-gateway
+  http:
+  - match:
+    - port: 15672
+    route:
+    - destination:
+        host: rabbitmq-app
+        port:
+          number: 15672
+        subset: v2
