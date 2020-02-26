@@ -1,7 +1,0 @@
-commonLabels:
-  app: rabbitmq
-  
-bases:
- - ../../base
-
-namespace: default 

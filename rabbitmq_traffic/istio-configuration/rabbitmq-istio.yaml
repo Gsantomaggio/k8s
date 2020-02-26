@@ -11,19 +11,6 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-# apiVersion: networking.istio.io/v1alpha3
-# kind: ServiceEntry
-# metadata:
-#   name: rabbitmq-se
-# spec:
-#   hosts:
-#   - rabbitmqv1.test
-#   location: MESH_INTERNAL
-#   ports:
-#   - number: 15672
-#     name: http
-#     protocol: HTTP
-# ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -54,6 +41,8 @@ metadata:
 spec:
   host: rabbitmq-app
   trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
     connectionPool:
       tcp:
         maxConnections: 100
@@ -83,13 +72,13 @@ spec:
         port:
           number: 5672
         subset: v1
-      weight: 100
+      weight: 0
     - destination:
         host: rabbitmq-app
         port:
           number: 5672
         subset: v2
-      weight: 0
+      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
