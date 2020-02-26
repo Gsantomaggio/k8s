@@ -26,9 +26,9 @@ Install the clusters:
 
 ## Hostname resolution
 You need to resolve the following hostnames:
- - `rabbitmqv1.test`
- - `rabbitmqv2.test`
- - `rabbitmq.test`
+ - `rabbitmqv1.test` (for the http ui  `Version 1` http://rabbitmqv1.test:15672/#/)
+ - `rabbitmqv2.test`(for the http ui `Version 2` http://rabbitmqv2.test:15672/#/)
+ - `rabbitmq.test` (for the amqp connections  `amqp://rabbitmq.test/`)
 
 
 I used `dnsmasq.conf` in this way:
@@ -88,6 +88,10 @@ kubectl get svc  custom-gateway -n istio-system -o wide
 NAME             TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                          AGE     SELECTOR
 custom-gateway   LoadBalancer   10.99.177.215   10.99.177.215   15672:30179/TCP,5672:32634/TCP   3d20h   app=custom-gateway,release=istio
 ```
+
+## Blue Green Update
+
+Change the `weight` parameter on the `rabbitmq-app-tcp` VirtualService (`rabbitmq-istio.yaml`)
 
 
 

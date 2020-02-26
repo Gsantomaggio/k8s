@@ -60,7 +60,7 @@ metadata:
   name: rabbitmq-app-tcp
 spec:
   hosts:
-  - rabbitmqv1.test
+  - rabbitmq.test
   gateways:
   - rabbitmq-app-gateway
   tcp:
