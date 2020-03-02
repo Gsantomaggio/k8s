@@ -6,7 +6,7 @@ metadata:
   labels:
     app: rabbitmq-app
 spec:
-  serviceName: rabbitmq-app
+  serviceName: rabbitmq-app-v1-discovery
   # Three nodes is the recommended minimum. Some features may require a majority of nodes
   # to be available.
   replicas: 3
@@ -21,7 +21,7 @@ spec:
         app: rabbitmq-app
         version: v1
     spec:
-    #  serviceAccountName: rabbitmq
+     # serviceAccountName: rabbitmq-app-v1-discovery
       terminationGracePeriodSeconds: 10
       nodeSelector:
         # Use Linux nodes in a mixed OS kubernetes cluster.
@@ -71,6 +71,8 @@ spec:
           timeoutSeconds: 10
         imagePullPolicy: Always
         env:
+          - name: K8S_SERVICE_NAME
+            value: rabbitmq-app-v1-discovery
           - name: MY_POD_NAME
             valueFrom:
               fieldRef:
@@ -83,9 +85,12 @@ spec:
           - name: RABBITMQ_USE_LONGNAME
             value: "true"
           - name: RABBITMQ_NODENAME
-            value: rabbit@$(MY_POD_NAME).rabbitmq-app.$(MY_POD_NAMESPACE).svc.cluster.local
+            value: rabbit@$(MY_POD_NAME).$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local
+          - name: K8S_HOSTNAME_SUFFIX
+            value: .$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local
           - name: RABBITMQ_ERLANG_COOKIE
             value: "mycookie"
+
       volumes:
         - name: config-volume
           configMap:
