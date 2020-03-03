@@ -98,6 +98,7 @@ Change the `weight` parameter on the `rabbitmq-app-tcp` VirtualService (`rabbitm
 The example can work also without istio, of course you don't have the traffic management feature.
 
  - be sure you don't have istio label enabled, if yes remove it `kubectl label namespace default istio-injection-`
+ 
  then deploy the yaml(s) without istio:
  - `kubectl apply -k rabbitmq-service`
  - `kubectl apply -k rabbitmq-cluster-v1` 
