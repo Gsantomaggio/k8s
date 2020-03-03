@@ -5,6 +5,7 @@ metadata:
   name: rabbitmq-app-v1
   labels:
     app: rabbitmq-app
+    version: v1
 spec:
   serviceName: rabbitmq-app-v1-discovery
   # Three nodes is the recommended minimum. Some features may require a majority of nodes

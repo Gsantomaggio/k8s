@@ -17,3 +17,4 @@ spec:
      port: 4369
   selector:
     app: rabbitmq-app
+    version: v2
