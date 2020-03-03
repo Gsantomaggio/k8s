@@ -13,7 +13,6 @@ Each cluster has three nodes.
 ## Install it on minikube
 
 Requirements:
- - Consul, I followed this [guide line](https://learn.hashicorp.com/consul/kubernetes/minikube)
  - `kubectl label namespace default istio-injection=enabled` enables Istio Injection
 
 
@@ -94,4 +93,12 @@ custom-gateway   LoadBalancer   10.99.177.215   10.99.177.215   15672:30179/TCP,
 Change the `weight` parameter on the `rabbitmq-app-tcp` VirtualService (`rabbitmq-istio.yaml`)
 
 
+### Without Istio
 
+The example can work also without istio, of course you don't have the traffic management feature.
+
+ - be sure you don't have istio label enabled, if yes remove it `kubectl label namespace default istio-injection-`
+ then deploy the yaml(s) without istio:
+ - `kubectl apply -k rabbitmq-service`
+ - `kubectl apply -k rabbitmq-cluster-v1` 
+ - `kubectl apply -k rabbitmq-cluster-v2`

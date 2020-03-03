@@ -1,9 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: rabbitmq-app
+  name: rabbitmq-app-v1-discovery
 spec:
   type: ClusterIP
+  clusterIP: None
   ports:
    - name: http
      protocol: TCP
@@ -16,3 +17,4 @@ spec:
      port: 4369
   selector:
     app: rabbitmq-app
+    version: v1
