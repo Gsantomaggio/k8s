@@ -63,7 +63,7 @@ domain=test
 address=/test/10.99.177.215
 ```
 
-Where `10.99.177.215` is the `custom-gateway` external IP given by:
+Where `10.99.177.215` is the `rabbitmq-ingressgateway` external IP given by:
 ```
 minikube tunnel
 ```
