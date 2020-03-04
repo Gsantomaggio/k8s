@@ -95,7 +95,7 @@ Change the `weight` parameter on the `rabbitmq-app-tcp` VirtualService (`rabbitm
 
 ### Enable MTLS 
 
-To test the cluster with MTLS you have to install/update to use the mtls mode, for ex:
+To test the cluster with MTLS you have to install/update ISTIO to use the mtls mode, for ex:
 ```
  istioctl manifest apply --set profile=demo \
   --set values.global.mtls.auto=true \
