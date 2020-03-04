@@ -17,8 +17,8 @@ metadata:
   name: rabbitmq-app-gateway
 spec:
   selector:
- #   istio: ingressgateway
-    app: custom-gateway
+    app: rabbitmq-ingressgateway
+
   servers:
   - port:
       number: 5672

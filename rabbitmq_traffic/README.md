@@ -14,14 +14,40 @@ Each cluster has three nodes.
 
 Requirements:
  - `kubectl label namespace default istio-injection=enabled` enables Istio Injection
+ - install istio, with some profile, for example:
+   ```
+   istioctl manifest apply --set profile=demo
+   ```
+   wait until all the components are up and running.
 
 
-Install the clusters:
+
+Install the clusters, step by step:
 
  - `kubectl apply -k rabbitmq-service/` Install The RabbitMQ service and the RBAC
  - `kubectl apply -k istio-configuration/` Install the three istio virtual service and the gateway
  - `kubectl apply -k rabbitmq-cluster-v1` Install the RabbitMQ cluster Version 1 ( three nodes)
  - `kubectl apply -k rabbitmq-cluster-v2` Install the RabbitMQ cluster Version 2 ( three nodes)
+ 
+or you can use directly the file: `deploy.sh` 
+
+
+## Test the AMQP port
+
+use the script: `/telnet.sh`, here should be the result:
+
+```
+$ ./telnet.sh
+10.104.37.167:5672
+Trying 10.104.37.167...
+Connected to 10.104.37.167.
+Escape character is '^]'.
+test 
+
+AMQP    Connection closed by foreign host.
+```
+(The ip can change)
+
 
 ## Hostname resolution
 You need to resolve the following hostnames:
@@ -41,51 +67,13 @@ Where `10.99.177.215` is the `custom-gateway` external IP given by:
 ```
 minikube tunnel
 ```
-## Custom Gateway
+## RabbitMQ Gateway
 
-To create the `custom-gateway` I used [helm](https://istio.io/docs/setup/install/helm/):
-
+Check the RabbitMQ ingress gateway:
 ```
-gateways:
-  enabled: true
-  custom-gateway:
-    enabled: true
-    labels:
-      app: custom-gateway
-    replicaCount: 1
-    autoscaleMin: 1
-    autoscaleMax: 5
-    resources: {}
-      # limits:
-      #  cpu: 100m
-      #  memory: 128Mi
-      #requests:
-      #  cpu: 1800m
-      #  memory: 256Mi
-    cpu:
-      targetAverageUtilization: 80
-    loadBalancerIP: ""
-    loadBalancerSourceRanges: {}
-    externalIPs: []
-    serviceAnnotations: {}
-    podAnnotations: {}
-    type: LoadBalancer #change to NodePort, ClusterIP or LoadBalancer if need be
-    #externalTrafficPolicy: Local #change to Local to preserve source IP or Cluster for default behaviour or leave commented out
-    ports:
-      ## You can add custom gateway ports
-    - port: 15672
-      targetPort: 15672
-      name: http 
-    - port: 5672
-      targetPort: 5672
-      name: amqp 
-```
-
-Here is the result:
-```
-kubectl get svc  custom-gateway -n istio-system -o wide
-NAME             TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                          AGE     SELECTOR
-custom-gateway   LoadBalancer   10.99.177.215   10.99.177.215   15672:30179/TCP,5672:32634/TCP   3d20h   app=custom-gateway,release=istio
+kubectl get svc  rabbitmq-ingressgateway -n istio-system -o wide
+NAME                      TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                          AGE     SELECTOR
+rabbitmq-ingressgateway   LoadBalancer   10.104.37.167   10.104.37.167   5672:30896/TCP,15672:32747/TCP   3m57s   app=rabbitmq-ingressgateway,custom=ingressgateway
 ```
 
 ## Blue Green Update

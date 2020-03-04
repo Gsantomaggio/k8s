@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 #- mtls.yaml  ## Uncomment this to enable the mtls configuration
 - rabbitmq-istio.yaml
+- rabbitmq-service-ingress.yaml
