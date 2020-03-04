@@ -1,0 +1,39 @@
+apiVersion: authentication.istio.io/v1alpha1
+kind: Policy
+metadata:
+  labels:
+    app: rabbitmq-app
+  name: default
+spec:
+  peers:
+    - mtls: {}
+---
+apiVersion: authentication.istio.io/v1alpha1
+kind: Policy
+metadata:
+  labels:
+    app: rabbitmq-app
+  name: rabbitmq-disable-mtls
+spec:
+  targets:
+    - name: rabbitmq-app-v1-discovery
+      ports:
+        - number: 5672
+        - number: 15672
+    - name: rabbitmq-app-v1
+      ports:
+        - number: 5672
+        - number: 15672
+    - name: rabbitmq-app-v2-discovery
+      ports:
+        - number: 5672
+        - number: 15672
+    - name: rabbitmq-app-v2
+      ports:
+        - number: 5672
+        - number: 15672
+    - name: rabbitmq-app
+      ports:
+        - number: 4369
+        - number: 5672
+        - number: 15672
