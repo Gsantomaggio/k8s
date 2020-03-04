@@ -93,6 +93,17 @@ custom-gateway   LoadBalancer   10.99.177.215   10.99.177.215   15672:30179/TCP,
 Change the `weight` parameter on the `rabbitmq-app-tcp` VirtualService (`rabbitmq-istio.yaml`)
 
 
+### Enable MTLS 
+
+To test the cluster with MTLS you have to install/update to use the mtls mode, for ex:
+```
+ istioctl manifest apply --set profile=demo \
+  --set values.global.mtls.auto=true \
+  --set values.global.mtls.enabled=false
+```
+
+Then uncomment `- mtls.yaml` on the file `istio-configuration/kustomization.yaml`
+
 ### Without Istio
 
 The example can work also without istio, of course you don't have the traffic management feature.
