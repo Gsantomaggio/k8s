@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app-service
+  namespace: staging
+  labels:
+    app: web-app
+spec:
+  clusterIP: None
+  ports:
+    - port: 2000
+      name: web-app
+  selector:
+    app: web-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app-service
+  namespace: production
+  labels:
+    app: web-app
+spec:
+  clusterIP: None
+  ports:
+    - port: 2000
+      name: web-app
+  selector:
+    app: web-app
