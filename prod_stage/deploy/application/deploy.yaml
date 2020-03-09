@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  namespace: staging
+  labels:
+    app: web-app
+    version: staging
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-app
+      version: staging
+  template:
+    metadata:
+      labels:
+        app: web-app
+        version: staging
+    spec:
+      containers:
+        - name: web-app
+          image: webapp
+          env:
+            - name: ENVIRONMENT
+              value: "staging"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 2000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  namespace: production
+  labels:
+    app: web-app
+    version: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-app
+      version: production
+  template:
+    metadata:
+      labels:
+        app: web-app
+        version: production
+    spec:
+      containers:
+        - name: web-app
+          image: webapp
+          env:
+            - name: ENVIRONMENT
+              value: "production"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 2000
