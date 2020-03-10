@@ -12,15 +12,15 @@ Open a new terminal window and start minikube tunnel (it's a blocking operation)
 ```
 minukube tunnel
 ```
+Export the minikube docker-env variables
+```
+eval $(minikube docker-env)
+```
 Build the needed images
 ```
 cd web_app
 docker build . -t web-app
 cd ..
-```
-Export the minikube docker-env variables
-```
-eval $(minikube docker-env)
 ```
 Deploy the example
 ```
