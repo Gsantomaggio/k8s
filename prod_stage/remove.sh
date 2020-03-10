@@ -1,5 +1,5 @@
 #!/usr/bin/zsh
-kubectl apply -k deploy/application
-kubectl apply -k deploy/istio-configuration
-kubectl label namespace staging istio-injection=enabled
+kubectl delete -k deploy/application
+kubectl delete -k deploy/istio-configuration
+##kubectl label namespace staging istio-injection=enabled
 
