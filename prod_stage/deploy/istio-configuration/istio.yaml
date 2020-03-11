@@ -25,8 +25,8 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "staging.test"
-    - "production.test"
+    - "staging.test1"
+    - "production.test1"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -35,7 +35,7 @@ metadata:
   namespace: staging
 spec:
   hosts:
-  - "staging.test"
+  - "staging.test1"
   gateways:
   - web-app-gateway.istio-system
   http:
@@ -57,7 +57,7 @@ metadata:
   namespace: production
 spec:
   hosts:
-    - "production.test"
+    - "production.test1"
   gateways:
     - web-app-gateway.istio-system
   http:
