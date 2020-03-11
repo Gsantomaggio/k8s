@@ -12,8 +12,8 @@ echo ""
 echo ""
 
 echo "To easy resolve the adress you can add the ip to the /etc/hosts file:"
-echo $INGRESS_HOST  "staging.test"
-echo $INGRESS_HOST  "production.test"
+echo $INGRESS_HOST  "staging.test1"
+echo $INGRESS_HOST  "production.test1"
 
 
 

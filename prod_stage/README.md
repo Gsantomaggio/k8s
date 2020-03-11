@@ -1,7 +1,6 @@
 # Production staging example
-To run the demo checkot the prod_stage branch:
+To run the demo go to the directory:
 ```
-git checkout prod_stage
 cd prod_stage
 ```
 Make sure you have minikube up and running:
@@ -31,3 +30,12 @@ Find the IP of the ingress
 ./getipingress.sh
 ```
 Set the entries in /etc/hosts for production and staging as the output of the script suggests.
+
+Test it with a browser:
+```
+http://production.test1
+```
+and
+```
+http://stage.test1
+```
