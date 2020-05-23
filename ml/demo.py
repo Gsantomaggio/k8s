@@ -77,7 +77,7 @@ def plotImages(images_arr):
         ax.axis('off')
     plt.tight_layout()
     #plt.show()
-    plt.savefig('output/dogs_cats.pdf') #<--- THIS REQUIRE AN ARGUMENT
+    plt.savefig(os.getcwd() +'/output/dogs_cats.pdf') #<--- THIS REQUIRE AN ARGUMENT
 
 #Let's save our images instead of plotting them...
 plotImages(sample_training_images[:5])
@@ -135,4 +135,4 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
-plt.savefig('output/Training_and_Validation.pdf')
+plt.savefig(os.getcwd()+'/output/Training_and_Validation.pdf')
