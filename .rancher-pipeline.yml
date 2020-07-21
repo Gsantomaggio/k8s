@@ -1,0 +1,11 @@
+stages:
+- name: Create Docker Image
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ml/kubeflow/Dockerfile
+      buildContext: .
+      tag: gsantomaggio/sklearn
+      pushRemote: true
+      registry: index.docker.io
+timeout: 60
+notification: {}
