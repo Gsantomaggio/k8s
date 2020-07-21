@@ -31,4 +31,7 @@ stages:
           --data "$gitjson" \
           -X POST http://ai-orchestrator.ai-orchestrator/api/pipe/run
 timeout: 60
+branch:
+  include:
+  - wip
 notification: {}
