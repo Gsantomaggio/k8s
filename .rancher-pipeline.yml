@@ -3,7 +3,7 @@ stages:
   steps:
   - publishImageConfig:
       dockerfilePath: ml/kubeflow/Dockerfile
-      buildContext: .
+      buildContext: ml/kubeflow/
       tag: gsantomaggio/sklearn
       pushRemote: true
       registry: index.docker.io
