@@ -22,10 +22,19 @@ stages:
                  -X POST http://ai-orchestrator.ai-orchestrator/api/template
   - runScriptConfig:
       image: python:latest
-      shellScript: |
+      shellScript: |-
         gitjson='{"type":"kubegit","name":"DEMO IRIS","description":"Demo", "outputdirectory": "models","image": {"name":"gsantomaggio/sklearn","execparameters":""},"git": {"url":"https://github.com/Gsantomaggio/k8s"}}'
         curl  -i -X POST -H "Content-Type: multipart/form-data"\
                  -F data="$gitjson" \
                  -X POST  http://ai-orchestrator.ai-orchestrator/api/pipe/upload
+        sleep 3
+  - runScriptConfig:
+      image: python:latest
+      shellScript: |
+        gitjson='{"backendname":"Kubeflo","name":"DEMO IRIS","description":"Description","template":"iris" }'
+
+        curl --header "Content-Type: application/json" \
+          --data "$gitjson" \
+          -X POST http://ai-orchestrator.ai-orchestrator/api/pipe/run
 timeout: 60
 notification: {}
