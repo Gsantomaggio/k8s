@@ -11,7 +11,7 @@ stages:
       image: python:latest
       shellScript: |-
         gitjson='{"name":"iris","description":"iris","backendtype":"kubeflow" }'
-        curl  -i -X POST -H "Content-Type: multipart/form-data" -F "template=@$file/classification_v1.py" \
+        curl  -i -X POST -H "Content-Type: multipart/form-data" -F "template=@$file/ml/kubeflow/classification_v1.py" \
                  -F data="$gitjson" \
                  -X POST http://ai-orchestrator.ai-orchestrator/api/template
 timeout: 60
