@@ -1,12 +1,4 @@
 stages:
-- name: Create Docker Image
-  steps:
-  - publishImageConfig:
-      dockerfilePath: ml/kubeflow/Dockerfile
-      buildContext: ml/kubeflow/
-      tag: gsantomaggio/sklearn
-      pushRemote: true
-      registry: index.docker.io
 - name: Setup Orchestrator
   steps:
   - runScriptConfig:
@@ -28,10 +20,12 @@ stages:
                  -F data="$gitjson" \
                  -X POST  http://ai-orchestrator.ai-orchestrator/api/pipe/upload
         sleep 3
+- name: Run PIPE Line to KF
+  steps:
   - runScriptConfig:
       image: python:latest
       shellScript: |
-        gitjson='{"backendname":"Kubeflo","name":"DEMO IRIS","description":"Description","template":"iris" }'
+        gitjson='{"backendname":"Kubeflow","name":"DEMO IRIS","description":"Description","template":"iris" }'
 
         curl --header "Content-Type: application/json" \
           --data "$gitjson" \
