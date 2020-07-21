@@ -50,7 +50,7 @@ def pipeline(project_id='ai-254012'):
             name='TEST fail decision KNC ',
             image=image,
             command=['sh', '-c'],
-            arguments=["ls"],
+            arguments=["ls -la"],
         )
         c.execution_options.caching_strategy.max_cache_staleness = "P0D"
 
