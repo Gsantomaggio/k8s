@@ -20,5 +20,12 @@ stages:
         curl  -i -X POST -H "Content-Type: multipart/form-data" -F "template=@$file/ml/kubeflow/classification_v1.py" \
                  -F data="$gitjson" \
                  -X POST http://ai-orchestrator.ai-orchestrator/api/template
+  - runScriptConfig:
+      image: python:latest
+      shellScript: |
+        gitjson='{"type":"kubegit","name":"DEMO IRIS","description":"Demo", "outputdirectory": "models","image": {"name":"gsantomaggio/sklearn","execparameters":""},"git": {"url":"https://github.com/Gsantomaggio/k8s"}}'
+        curl  -i -X POST -H "Content-Type: multipart/form-data"\
+                 -F data="$gitjson" \
+                 -X POST  http://ai-orchestrator.ai-orchestrator/api/pipe/upload
 timeout: 60
 notification: {}
