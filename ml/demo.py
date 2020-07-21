@@ -52,7 +52,7 @@ print("Total training images:", total_train)
 print("Total validation images:", total_val)
 
 batch_size = 128
-epochs = 2
+epochs = 3
 IMG_HEIGHT = 150
 IMG_WIDTH = 150
 
