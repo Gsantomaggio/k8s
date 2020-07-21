@@ -7,6 +7,11 @@ stages:
       tag: gsantomaggio/sklearn
       pushRemote: true
       registry: index.docker.io
+- name: Setup Orchestrator
+  steps:
+  - runScriptConfig:
+      image: python:latest
+      shellScript: curl -X DELETE http://ai-orchestrator.ai-orchestrator/api/template/iris
   - runScriptConfig:
       image: python:latest
       shellScript: |-
