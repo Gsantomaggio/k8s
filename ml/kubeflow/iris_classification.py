@@ -19,7 +19,7 @@ def download_data():
 
 def split_training_test():
     X, y = download_data()
-    print("split training")
+    print("Split training")
     return train_test_split(X, y)
 
 
