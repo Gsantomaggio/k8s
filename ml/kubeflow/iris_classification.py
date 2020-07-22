@@ -9,7 +9,7 @@ from sklearn.tree import DecisionTreeClassifier
 
 
 def download_data():
-    print("Download Data")
+    print("Download data")
     os.mkdir("models")
     iris = datasets.load_iris()
     X = iris.data
@@ -19,7 +19,7 @@ def download_data():
 
 def split_training_test():
     X, y = download_data()
-    print("Split training")
+    print("split training")
     return train_test_split(X, y)
 
 

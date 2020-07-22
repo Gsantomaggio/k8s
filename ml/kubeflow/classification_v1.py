@@ -5,13 +5,13 @@ import kfp.dsl as dsl
 @dsl.pipeline(name='iris_classification')
 def pipeline(project_id='ai-254012'):
     command = 'python3  iris_classification.py kf_decision_tree_test'
-    image = "sklearn:v10"
+    image = '{{{ .Image.Name }}}'
     vop = dsl.VolumeOp(
         name="Create disk",
         resource_name="pipe-pvc",
-        storage_class='standard',
+        storage_class='{{{ .Volume.StorageClass }}}',
         modes=dsl.VOLUME_MODE_RWO,
-        size='1Gi'
+        size='{{{ .Volume.Size }}}'
     )
 
     data_tree = dsl.ContainerOp(
@@ -50,7 +50,7 @@ def pipeline(project_id='ai-254012'):
             name='TEST fail decision KNC ',
             image=image,
             command=['sh', '-c'],
-            arguments=["ls -la"],
+            arguments=["ls"],
         )
         c.execution_options.caching_strategy.max_cache_staleness = "P0D"
 
