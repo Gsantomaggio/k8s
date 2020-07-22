@@ -9,7 +9,7 @@ from sklearn.tree import DecisionTreeClassifier
 
 
 def download_data():
-    print("Download data")
+    print("Download Data")
     os.mkdir("models")
     iris = datasets.load_iris()
     X = iris.data
