@@ -31,17 +31,13 @@ stages:
           --data "$gitjson" \
           -X POST http://ai-orchestrator.ai-orchestrator/api/pipe/run
   - runScriptConfig:
-      image: python:latest
-      shellScript: |-
-        pip3 install requests
-        python3 ml/kubeflow/wait_pipe.py ai-orchestrator.ai-orchestrator
+      image: gsantomaggio/sklearn
+      shellScript: python3 ml/kubeflow/wait_pipe.py ai-orchestrator.ai-orchestrator
 - name: Run in AWS
   steps:
   - runScriptConfig:
-      image: python:latest
-      shellScript: |-
-        pip3 install requests
-        python3 ml/kubeflow/wait_pipe.py ai-orchestrator.ai-orchestrator
+      image: gsantomaggio/sklearn
+      shellScript: python3 ml/kubeflow/wait_pipe.py ai-orchestrator.ai-orchestrator
   - runScriptConfig:
       image: python:latest
       shellScript: |-
