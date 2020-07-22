@@ -1,8 +1,9 @@
+import sys
 import time
 
 import requests
 
-url = 'http://localhost:8080/apis/v1beta1/runs'
+url = 'http://{0}/apis/v1beta1/runs'.format(sys.argv[1])
 
 success = False
 tentatives = 0
