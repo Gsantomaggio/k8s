@@ -16,5 +16,8 @@ while not success:
     success = last["status"] == "Succeeded"
     time.sleep(2.4)
     tentatives += 1
-    if tentatives >= 30:
+    if tentatives >= 10:
         break
+
+if not success:
+    raise ValueError('error')
