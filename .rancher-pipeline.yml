@@ -32,12 +32,16 @@ stages:
           -X POST http://ai-orchestrator.ai-orchestrator/api/pipe/run
   - runScriptConfig:
       image: python:latest
-      shellScript: python3 ml/kubeflow/wait_pipe.py
+      shellScript: |-
+        pip3 install requests
+        python3 ml/kubeflow/wait_pipe.py
 - name: Run in AWS
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: python3 ml/kubeflow/wait_pipe.py
+      shellScript: |-
+        pip3 install requests
+        python3 ml/kubeflow/wait_pipe.py
   - runScriptConfig:
       image: python:latest
       shellScript: |-
