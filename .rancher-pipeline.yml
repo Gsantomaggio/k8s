@@ -33,6 +33,18 @@ stages:
   - runScriptConfig:
       image: python:latest
       shellScript: |-
+        pip3 install requests
+        python3 ml/kubeflow/wait_pipe.py
+- name: Run in AWS
+  steps:
+  - runScriptConfig:
+      image: python:latest
+      shellScript: |-
+        pip3 install requests
+        python3 ml/kubeflow/wait_pipe.py
+  - runScriptConfig:
+      image: python:latest
+      shellScript: |-
         gitjson='{"backendname":"kubeflowAWS","name":"DEMO IRIS","description":"Description","template":"iris" }'
 
         curl --header "Content-Type: application/json" \
