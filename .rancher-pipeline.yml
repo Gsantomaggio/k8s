@@ -33,7 +33,7 @@ stages:
   - runScriptConfig:
       image: python:latest
       shellScript: |-
-        gitjson='{"backendname":"KubeflowAWS","name":"DEMO IRIS","description":"Description","template":"iris" }'
+        gitjson='{"backendname":"kubeflowAWS","name":"DEMO IRIS","description":"Description","template":"iris" }'
 
         curl --header "Content-Type: application/json" \
           --data "$gitjson" \
