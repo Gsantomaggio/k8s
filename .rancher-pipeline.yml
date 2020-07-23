@@ -30,14 +30,8 @@ stages:
         curl --header "Content-Type: application/json" \
           --data "$gitjson" \
           -X POST http://ai-orchestrator.ai-orchestrator/api/pipe/run
-  - runScriptConfig:
-      image: gsantomaggio/sklearn
-      shellScript: python3 ml/kubeflow/wait_pipe.py ml-pipeline-ui.kubeflow
 - name: Run in AWS
   steps:
-  - runScriptConfig:
-      image: gsantomaggio/sklearn
-      shellScript: python3 ml/kubeflow/wait_pipe.py ml-pipeline-ui.kubeflow
   - runScriptConfig:
       image: python:latest
       shellScript: |-
