@@ -33,7 +33,7 @@ while [ : ]
     
     if [ $status -ne 0 ]
     then 
-      infoL "$1 isn't ready yet. This may take a few minutes..."
+      infoL "$2 isn't ready yet. This may take a few minutes..."
       sleep_cursor
     else
       break  
