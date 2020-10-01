@@ -12,7 +12,7 @@ infoL()
 sleep_cursor()
 {
  chars="/-\|"
- for (( z=0; z<7; z++ )); do
+ for (( z=0; z<5; z++ )); do
    for (( i=0; i<${#chars}; i++ )); do
     sleep 0.5
     echo -en "${chars:$i:1}" "\r"
