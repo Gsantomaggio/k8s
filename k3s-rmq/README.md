@@ -1,6 +1,6 @@
 # Description
 ---
-Install a lightweight Kubernetes stack for with a RabbitMQ Cluster.
+Install a lightweight Kubernetes with a RabbitMQ Cluster.
 Compontents:
  - [K3s](https://k3s.io/)
  - [RabbitMQ](www.rabbitmq.com)
