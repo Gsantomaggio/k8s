@@ -1,0 +1,109 @@
+#!/bin/bash
+info()
+{
+    echo '[INFO] ' "$@"
+}
+
+infoL()
+{
+    echo -en '[INFO] ' "$@\n"
+}
+
+sleep_cursor()
+{
+ chars="/-\|"
+ for (( z=0; z<7; z++ )); do
+   for (( i=0; i<${#chars}; i++ )); do
+    sleep 0.5
+    echo -en "${chars:$i:1}" "\r"
+  done
+done
+}
+
+
+wait() 
+{
+status=1
+infoL "Testing.." $1.$2.$3  
+while [ : ]
+  do
+    sleep_cursor &
+    kubectl wait --for condition=$1 --timeout=14s $2 -l  $3  -n $4
+    status=$?
+    
+    if [ $status -ne 0 ]
+    then 
+      infoL "$1 isn't ready yet. This may take a few minutes..."
+      sleep_cursor
+    else
+      break  
+    fi 
+  done
+}
+
+
+
+curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --no-deploy traefik
+
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+
+info "Installing RabbitMQ Operator"
+kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
+sleep_cursor &
+
+waiting_deploy_array=("available;deploy;k8s-app=kube-dns;kube-system;" 
+                   "available;deploy;k8s-app=metrics-server;kube-system;available"
+                   "available;deploy;app.kubernetes.io/component=rabbitmq-cluster-operator;rabbitmq-system;available" 
+                   )
+
+for i in "${waiting_pod_array[@]}"; do 
+  echo "$i"; 
+  IFS=';' read -ra VALUES <<< "$i"
+    wait "${VALUES[0]}" "${VALUES[1]}" "${VALUES[2]}" "${VALUES[3]}"
+done
+
+info "Deploying tree nodes cluster"
+sleep_cursor
+
+kubectl apply -f - << EOF
+  apiVersion: rabbitmq.com/v1beta1
+  kind: RabbitmqCluster
+  metadata:
+    name: definition
+  spec:
+    replicas: 3
+    service:
+      type: LoadBalancer
+EOF
+sleep_cursor &
+
+waiting_pod_array=("ready;pod;statefulset.kubernetes.io/pod-name=definition-rabbitmq-server-0;default" 
+                   "ready;pod;statefulset.kubernetes.io/pod-name=definition-rabbitmq-server-1;default"
+                   "ready;pod;statefulset.kubernetes.io/pod-name=definition-rabbitmq-server-2;default" 
+                   )
+
+for i in "${waiting_pod_array[@]}"; do 
+  echo "$i"; 
+  IFS=';' read -ra VALUES <<< "$i"
+    wait "${VALUES[0]}" "${VALUES[1]}" "${VALUES[2]}" "${VALUES[3]}"
+done
+
+
+
+info "K3s RabbitMQ is ready!!"
+
+info "To use kubectl: export KUBECONFIG=/etc/rancher/k3s/k3s.yaml"
+info "or k3s kubectl get nodes"
+
+curl -o kubectl-rabbitmq "https://raw.githubusercontent.com/rabbitmq/cluster-operator/main/bin/kubectl-rabbitmq"
+chmod +x kubectl-rabbitmq
+
+
+
+IP=$(kubectl get service/definition-rabbitmq-client -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n default)
+info "Management UI: http://"$IP":15672"
+info "AMQP:" $IP":5672"
+info "Credentials:" 
+./kubectl-rabbitmq  secrets definition
+info "To remove k3s: k3s-uninstall.sh"
+
