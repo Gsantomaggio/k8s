@@ -9,7 +9,7 @@ Compontents:
  
 
 
-# How to install 
+# How to install (only Linux)
 ---
 
 ```bash
@@ -27,7 +27,7 @@ username: 1ZZZWMCttegIIZSUKzdsyk39bhf4yyqP
 password: aIMOJafZEngc_94ePchT778nU9zvutOI
 ```
 
-# Vagrant 
+# Vagrant (all users)
 ---
 
 Deploy it in Vagrant:
