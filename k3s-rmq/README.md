@@ -5,6 +5,7 @@ Compontents:
  - [K3s](https://k3s.io/)
  - [RabbitMQ](www.rabbitmq.com)
  - [RabbitMQ Operator](https://www.rabbitmq.com/kubernetes/operator/operator-overview.html)
+ - [k9s](https://github.com/derailed/k9s) (only in Vagrant)
  
 
 
@@ -25,11 +26,6 @@ As result you should have something like:
 username: 1ZZZWMCttegIIZSUKzdsyk39bhf4yyqP
 password: aIMOJafZEngc_94ePchT778nU9zvutOI
 ```
-
-Demo:
-
-![](gif/rmqs.gif)
-
 
 # Vagrant 
 ---
@@ -52,3 +48,8 @@ For not Linux users
 
 * Download the file: `https://raw.githubusercontent.com/Gsantomaggio/k8s/wip/k3s-rmq/Vagrantfile` 
 * `vagrant up`
+
+
+Demo:
+
+![](gif/rmqs.gif)
