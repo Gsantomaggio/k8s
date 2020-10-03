@@ -34,6 +34,21 @@ Demo:
 # Vagrant 
 ---
 
-For non Linux users or just to deploy it in Vagrant:
+Deploy it in Vagrant:
 
-WIP
+The vagrant machine requires:
+* 4 cpus
+* 8 GB Ram 
+
+For Linux users:
+```
+#!/bin/bash
+
+curl https://raw.githubusercontent.com/Gsantomaggio/k8s/wip/k3s-rmq/Vagrantfile -o Vagrantfile
+vagrant up
+```
+
+For not Linux users
+
+* Download the file: `https://raw.githubusercontent.com/Gsantomaggio/k8s/wip/k3s-rmq/Vagrantfile` 
+* `vagrant up`
