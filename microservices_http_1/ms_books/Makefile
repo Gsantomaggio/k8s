@@ -1,8 +1,8 @@
-buildimage:
+build-image:
 	docker build . -t books
 
-testlocalimage: buildimage
-	docker run -d -p 3000:3000 books
+run-local-image: build-image
+	docker run -d -p 2200:2200 books
 
 build-minikube-image:
 	eval $(minikube docker-env)

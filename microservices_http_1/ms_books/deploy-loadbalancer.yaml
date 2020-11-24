@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: books-service
+  labels:
+    app: books-app
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 2200
+      name: books-app
+  selector:
+    app: books-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books
+  labels:
+    app: books-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: books-app
+  template:
+    metadata:
+      labels:
+        app: books-app
+    spec:
+      containers:
+        - name: webbooks
+          image: gsantomaggio/books:1.1
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 2200
+           
