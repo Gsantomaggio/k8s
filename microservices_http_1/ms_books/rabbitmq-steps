@@ -1,0 +1,7 @@
+kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
+kubectl create namespace lemur
+kubectl apply -f rabbitmq.yaml
+
+kubectl exec -it -n lemur rabbitmq-lemur-server-0 -- rabbitmqctl add_user test test
+kubectl exec -it -n lemur rabbitmq-lemur-server-0 -- rabbitmqctl set_user_tags test administrator
+kubectl exec -it -n lemur rabbitmq-lemur-server-0 -- rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
